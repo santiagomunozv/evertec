@@ -1,0 +1,13 @@
+{
+    "name": "Transacciones",
+    "alias": "transacciones",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\Transacciones\\Providers\\TransaccionesServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}
