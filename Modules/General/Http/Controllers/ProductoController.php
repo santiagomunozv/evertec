@@ -1,16 +1,14 @@
 <?php
 
-namespace Modules\Seguridad\Http\Controllers;
+namespace Modules\General\Http\Controllers;
 
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\DB;
-use Modules\Seguridad\Entities\Usuario;
-use Modules\Seguridad\Http\Requests\UsuarioRequest;
-use Modules\Seguridad\Repositories\RolRepository;
+use Modules\General\Entities\Producto;
+use Modules\General\Http\Requests\ProductoRequest;
 
-class UsuarioController extends Controller
+class ProductoController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -22,8 +20,8 @@ class UsuarioController extends Controller
         if(!$permisos){
             abort(401);
         }
-        $usuario = Usuario::orderBy('id', 'DESC')->get();
-        return view('seguridad::usuarioGrid', compact('usuario', 'permisos'));
+        $producto = Producto::orderBy('id', 'DESC')->get();
+        return view('general::productoGrid', compact('producto', 'permisos'));
     }
 
     /**
@@ -32,10 +30,9 @@ class UsuarioController extends Controller
      */
     public function create()
     {
-        $usuario = new Usuario();
-        $rol = RolRepository::getAllRolByActive();
+        $producto = new Producto();
 
-        return view('seguridad::usuarioForm', compact('usuario', 'rol'));
+        return view('general::productoForm', compact('producto'));
     }
 
     /**
@@ -43,11 +40,11 @@ class UsuarioController extends Controller
      * @param Request $request
      * @return Renderable
      */
-    public function store(UsuarioRequest $request)
+    public function store(ProductoRequest $request)
     {
         try{
-            $usuario = Usuario::create($request->all());
-            return response(['id' => $usuario->id] , 201);
+            $producto = Producto::create($request->all());
+            return response(['id' => $producto->id] , 201);
         }catch(\Exception $e){
             return abort(500, $e->getMessage());
         }
@@ -60,7 +57,7 @@ class UsuarioController extends Controller
      */
     public function show($id)
     {
-        return view('seguridad::show');
+        return view('general::show');
     }
 
     /**
@@ -70,10 +67,9 @@ class UsuarioController extends Controller
      */
     public function edit($id)
     {
-        $usuario = Usuario::find($id);
-        $rol = RolRepository::getAllRolByActive();
+        $producto = Producto::find($id);
 
-        return view('seguridad::usuarioForm', compact('usuario', 'rol'));
+        return view('general::productoForm', compact('producto'));
     }
 
     /**
@@ -82,13 +78,13 @@ class UsuarioController extends Controller
      * @param int $id
      * @return Renderable
      */
-    public function update(UsuarioRequest $request, $id)
+    public function update(ProductoRequest $request, $id)
     {
         try{
-            $usuario = Usuario::find($id);
-            $usuario->fill($request->all());
-            $usuario->save();
-            return response(['id' => $usuario->id] , 200);
+            $producto = Producto::find($id);
+            $producto->fill($request->all());
+            $producto->save();
+            return response(['id' => $producto->id] , 200);
         }catch(\Exception $e){
             return abort(500, $e->getMessage());
         }

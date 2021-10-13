@@ -16,7 +16,7 @@ class RoleOptionSeeder extends Seeder
     {
         DB::table('role_option')->insert([
             'id' => 1,
-            'create' => 0,
+            'create' => 1,
             'update' => 1,
             'delete' => 0,
             'read' => 0,

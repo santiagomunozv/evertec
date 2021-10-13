@@ -11,6 +11,9 @@
 |
 */
 
+use Illuminate\Support\Facades\Route;
+
 Route::prefix('general')->group(function() {
     Route::get('/', 'GeneralController@index');
+    Route::resource('/producto', 'ProductoController');
 });

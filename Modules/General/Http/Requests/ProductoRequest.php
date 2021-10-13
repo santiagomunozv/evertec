@@ -1,11 +1,11 @@
 <?php
 
-namespace Modules\Seguridad\Http\Requests;
+namespace Modules\General\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class UsuarioRequest extends FormRequest
+class ProductoRequest extends FormRequest
 {
     /**
      * Get the validation rules that apply to the request.
@@ -16,19 +16,19 @@ class UsuarioRequest extends FormRequest
     public function rules()
     {
         $validacion = array(
-            'login' => ['required', Rule::unique('users')->ignore($this->get('id'), 'id')],
-            'password' => 'required',
-            'role_id' => 'required',
+            'code' => ['required', Rule::unique('product')->ignore($this->get('id'), 'id')],
+            'name' => 'required',
+            'price' => 'required',
         );
         return $validacion;
     }
     public function messages()
     {
         $mensaje = array();
-        $mensaje["login.required"] =  "El Nombre de usuario es obligatorio";
-        $mensaje["login.unique"] =  "El Nombre de usuario debe ser único";
-        $mensaje["password.required"] =  "El campo Contraseña es obligatorio";
-        $mensaje["role_id.required"] =  "El campo Rol es obligatorio";
+        $mensaje["code.required"] =  "El Código del producto es obligatorio";
+        $mensaje["code.unique"] =  "El Código del producto debe ser único";
+        $mensaje["name.required"] =  "El campo Nombre es obligatorio";
+        $mensaje["price.required"] =  "El campo Precio es obligatorio";
 
         return $mensaje;
     }

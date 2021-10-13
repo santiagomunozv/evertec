@@ -7,9 +7,9 @@
 @endsection
 @section('contenido')
     @if (isset($usuario->id))
-        {!! Form::model($usuario, ['route' => ['usuario.update', $usuario->id], 'method' => 'PUT', 'id' => 'form-usuario', 'onsubmit' => 'return false;']) !!}
+        {!! Form::model($usuario, ['route' => ['usuarios.update', $usuario->id], 'method' => 'PUT', 'id' => 'form-usuario', 'onsubmit' => 'return false;']) !!}
     @else
-        {!! Form::model($usuario, ['route' => ['usuario.store', $usuario->id], 'method' => 'POST', 'id' => 'form-usuario', 'onsubmit' => 'return false;']) !!}
+        {!! Form::model($usuario, ['route' => ['usuarios.store', $usuario->id], 'method' => 'POST', 'id' => 'form-usuario', 'onsubmit' => 'return false;']) !!}
     @endif
     <div class="card border-left-info shadow h-100 py-2">
         <div class="card-body">
@@ -38,7 +38,7 @@
                 <div class="col-sm-12">
                     <div class="form-group">
                         {!! Form::label('role_id', 'Rol', ['class' => 'control-label']) !!}
-                        {!! Form::select('role_id', $rol, null, ['class' => 'form-control chosen-select', 'placeholder' => 'Ingresa el estado']) !!}
+                        {!! Form::select('role_id', $rol, null, ['class' => 'form-control chosen-select', 'placeholder' => 'Ingresa el rol']) !!}
                     </div>
                 </div>
             </div>
@@ -48,7 +48,7 @@
             @else
                 {!! Form::button('Adicionar', ['type' => 'button', 'class' => 'btn btn-info', 'onclick' => 'grabar()']) !!}
             @endif
-            {!! Form::button('Cancelar', ['type' => 'button', 'class' => 'btn btn-secondary', 'onclick' => 'retornarToGrid("seguridad", "usuario")']) !!}
+            {!! Form::button('Cancelar', ['type' => 'button', 'class' => 'btn btn-secondary', 'onclick' => 'retornarToGrid("seguridad", "usuarios")']) !!}
             {!! Form::close() !!}
         </div>
     </div>
