@@ -1,6 +1,6 @@
 var appWrapper = {
-    'regex' : {
-        'email' : /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+    'regex': {
+        'email': /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
     }
 }
 
@@ -55,15 +55,14 @@ function cambiarEstado(id, tabla, campo, estadoActual) {
     let titulo = 'Activar Información';
     let mensaje = '¿Realmente deseas activar de nuevo este registro?, los datos activos se volverán a mostrar en listas de selección al tratar de relacionarlos en nuevas transacciones';
 
-    if(estadoActual == 'Activo')
-    {
+    if (estadoActual == 'Activo') {
         clase = 'alert-danger';
         titulo = 'Inactivar Información';
         mensaje = '¿Realmente deseas inactivar este registro?, los datos inactivos se siguen visualizando en los informes pero no se muestran en listas de selección al tratar de relacionarlos en nuevas transacciones';
     }
-    modal.mostrarModal( titulo ,
-        '<div class="alert '+clase+' text-justify">'+mensaje+'</div>' ,
-        function(){
+    modal.mostrarModal(titulo,
+        '<div class="alert ' + clase + ' text-justify">' + mensaje + '</div>',
+        function () {
 
             let token = $('meta[name="csrf-token"]').attr('content');
             $.ajax({
@@ -72,11 +71,11 @@ function cambiarEstado(id, tabla, campo, estadoActual) {
                 url: '/cambiarestadodata',
                 data: { 'id': id, 'tabla': tabla, 'campo': campo },
                 type: 'POST',
-                success: function(resp){
+                success: function (resp) {
                     location.reload(true);
                 },
-                error: function(xhr, err) {
-                    modal.mostrarModal('Error','Ocurrio un problema al intentar cambiar de estado');
+                error: function (xhr, err) {
+                    modal.mostrarModal('Error', 'Ocurrio un problema al intentar cambiar de estado');
                 }
             });
 
@@ -85,31 +84,30 @@ function cambiarEstado(id, tabla, campo, estadoActual) {
 
 }
 
-function confirmarEliminacion(id, tabla, terminacionTabla){
+function confirmarEliminacion(id, tabla, terminacionTabla) {
 
-    modal.mostrarModal( 'Cuidado' ,
-        '<div class="alert alert-danger">¿Realmente deseas eliminar este registro?</div>' ,
-        function(){
+    modal.mostrarModal('Cuidado',
+        '<div class="alert alert-danger">¿Realmente deseas eliminar este registro?</div>',
+        function () {
             eliminarRegistro(id, tabla, terminacionTabla);
         }
     );
 }
 
-function eliminarRegistro(id, tabla, terminacionTabla)
-{
+function eliminarRegistro(id, tabla, terminacionTabla) {
     let token = $('meta[name="csrf-token"]').attr('content');
     $.ajax({
         headers: { 'X-CSRF-TOKEN': token },
         dataType: "json",
         url: '/eliminarregistrodata',
-        data: { 'id': id, 'tabla': tabla, 'terminacionTabla': terminacionTabla},
+        data: { 'id': id, 'tabla': tabla, 'terminacionTabla': terminacionTabla },
         type: 'POST',
-        success: function(resp){
-            modal.mostrarModal('Eliminación exitosa','Se ha eliminado correctamente el registro ',function(){
+        success: function (resp) {
+            modal.mostrarModal('Eliminación exitosa', 'Se ha eliminado correctamente el registro ', function () {
                 location.reload(true);
             });
         },
-        error: function(err) {
+        error: function (err) {
             modal.mostrarModal('Error al eliminar', err.responseJSON.tabla);
         }
     });
@@ -130,4 +128,9 @@ function convertirInputMinusculas(e) {
 function marcarNegrita(campo) {
     let text = "El campo " + campo.bold() + " es obligatorio";
     return text;
+}
+
+function clearForm(form) {
+    document.getElementById(form).reset();
+    $(".chosen-select").val('').trigger("chosen:updated");
 }

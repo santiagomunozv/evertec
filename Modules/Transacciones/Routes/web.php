@@ -11,6 +11,10 @@
 |
 */
 
-Route::prefix('transacciones')->group(function() {
+use Illuminate\Support\Facades\Route;
+
+Route::prefix('transacciones')->group(function () {
     Route::get('/', 'TransaccionesController@index');
+    Route::resource('pedido', 'PedidoController');
+    Route::get('searchpriceproduct/{id}', 'PedidoController@searchPriceByProduct');
 });
